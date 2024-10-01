@@ -1,56 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
 import './App.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { decrement, increment, Loggin } from './actions';
 
 function App() {
+  // Accessing state from the Redux store
+  const counter = useSelector((state) => state.counter);
+  const isLogged = useSelector((state) => state.isLogged);
+
+  // Creating a dispatch function
+  const dispatch = useDispatch();
+ 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+      {/* Displaying the counter value */}
+      <h1>Counter: {counter}</h1>
+      
+      {/* Buttons to increment and decrement the counter */}
+      <button onClick={() => dispatch(increment(5))}>+</button>
+      <button onClick={() => dispatch(decrement())}>-</button>
+
+      {/* Conditionally rendering content based on login state */}
+      {isLogged ? <h3>Some important information from user</h3> : ""}
+
+      {/* Button to toggle login state */}
+      <button onClick={() => dispatch(Loggin())}>
+        {isLogged ? "Logout" : "Login"}
+      </button>
     </div>
   );
 }
